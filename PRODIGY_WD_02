@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopwatch</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src=" script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <center>
+            <div id="stopwatchduration">00:00:00:00</div>
+            <ul id="laps"></ul>
+            <div class="lapbuttons">
+                <button id="start">start</button>
+                <button id="lap">lap</button>
+                <button id="stop">stop</button>
+                <button id="reset"style="display:none">reset</button>
+            </div>
+        </center>
+    </div>
+</body>
+</html>
+
+#CSS
+
+* {
+    margin:0px ;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    background-color:crimson;
+    height: 100vh;
+    display:flex;
+    align-content: center;
+    justify-content: center;
+}
+.container{
+    background-color: white;
+    padding: 25px;
+    width: 450px;
+    border-radius: 15px;
+    text-align: center; 
+}
+#stopwatchduration{
+    font-size: 55px;
+    color:black;
+    padding: 20px;
+}
+.lapbuttons{
+    display: flex;
+    justify-content: center;
+    gap:100px;
+}
+.lapbuttons button{
+    height: 45px;
+    width: 25%;
+    border-radius:10px;
+    background-color: white;
+    border: none;
+    outline: none;
+    padding: 5px;
+    margin: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+#laps{
+    height: 200px;
+    padding: 10px;
+    overflow: auto;
+}
+#laps li{
+    font-size: 22px;
+    padding: 10px;
+}
+
+#JS
+
+let timer;
+let time=0;
+let running=false;
+let lapcount=0;
+function startStop(){
+    if(running){
+        clearInterval(timer);
+        document.getElementById('startStopButton').innerText='start';
+        running=false;
+    }else{
+        timer=setInterval(updateDisplay,10);
+        document.getElementById('startStopButton').innerText='stop';
+        running=true;
+    }
+    }
+function reset(){
+    clearInterval(timer);
+    time=0;
+    lapcount=0;
+    running=false;
+    document.getElementById('display').innerText='00:00:00:00';
+    document.getElementById('startStopButton').innerText='start';
+    document.getElementById('laps').innerHTML='';
+}
+function updateDisplay(){
+    time++;
+    let milliseconds=time%100;
+    let seconds=math.floor(time/100)%60;
+    let minutes=math.floor(time/(100*60))%60;
+    let hours=math.floor(time/(100*60*60));
+
+let displayString = 
+    (hours <10 ? '0' + hours : hours) + ':' +
+    (minutes <10 ? '0' + minutes : minutes) + ':' +
+    (seconds <10 ? '0' + seconds : seconds);
+document.getElementById('display').innerText = displayString;
+}
+
+function lap() {
+    lapcount++;
+    let laptime = formatTime(time);
+    let lap = document.createElement('li');
+    lapItem.innerText = 'Lap' +lapcount + ':' +laptime;
+    document.getElementById('Laps').appendChild(lapItem);
+
+}
+
+function formatTime(){
+    let milliseconds=time%100;
+    let seconds=math.floor(time/100)%60;
+    let minutes=math.floor(time/(100*60))%60;
+    let hours=math.floor(time/(100*60*60));
+
+    return (
+        (hours <10 ? '0' + hours : hours) + ':' +
+        (minutes <10 ? '0' + minutes : minutes) + ':' +
+        (seconds <10 ? '0' + seconds : seconds)
+        (milliseconds <10 ? '0' + milliseconds : milliseconds)
+    )
+}
